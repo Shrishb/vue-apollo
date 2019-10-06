@@ -1,19 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <div v-if="$apollo.loading">Loading..</div>    
+      <div v-else>      
+      <h1>Name: {{viewer.name}}</h1>
+      <p>Email: {{viewer.email }}</p>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { gql } from "apollo-boost";
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
-  }
+  data: function() {
+    return {
+      viewer: {}
+    };
+  },
+   apollo: {     
+     viewer: {
+    query: gql`
+      { viewer {
+            name
+            email
+          }
+        }`
+    }
+    }
 }
+
 </script>
 
 <style>
